@@ -13,12 +13,12 @@ const divStyle = {
     margin: 'auto'
 }
 
-const InfoPanel = (props: InfoData) => {
-    let humanSize = formatBytes(props.contentSize, 3);
+const InfoPanel = (info: InfoData) => {
+    let humanSize = formatBytes(info.contentSize, 3);
 
     return <div style={divStyle}>
-        <h3>{props.wrapperId}</h3>
-        <h5>{props.wrapperSize} copies</h5>
+        <h3>{info.wrapperId}</h3>
+        <h5>{info.wrapperSize} copies</h5>
         <h5>{humanSize}</h5>
     </div>
 }
