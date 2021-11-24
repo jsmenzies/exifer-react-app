@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import InfoPanel from "./info-panel/InfoPanel";
 import ImagePreview from "./image-preview/ImagePreview";
 import ResultsPanel from "./results-panel/ResultsPanel";
-import {getWrapperData, listWrappers} from "../utils/S3Api";
+import {getImagePreview, getWrapperData, listWrappers} from "../utils/S3Api";
 
 const containerStyle = {
     display: "flex",
@@ -15,6 +15,7 @@ const CompareUi = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [wrapperKeys, setWrapperKeys] = useState<string[]>([]);
     const [wrapperId, setWrapperId] = useState<string>("");
+    const [wrapperPreview, setWrapperPreview] = useState<string>("")
 
     useEffect(() => {
         listWrappers()
@@ -29,10 +30,25 @@ const CompareUi = () => {
     }, []);
 
     useEffect(() => {
-        if (wrapperId !== '') {
+        if (wrapperId !== '' && wrapperId !== undefined) {
             getWrapperData(wrapperId)
-                .then(setWrapperKeys)
+                .then(data => {
+                    setWrapperKeys(data)
+                    return data
+                })
+                .then(data => {
+                    let key = data[0];
+                    getImagePreview(key)
+                        .then(data => {
+                            setWrapperPreview(data);
+                        })
+                })
+                .then(() => {
+                    console.log({currentIndex})
+                    console.log({wrapperId})
+                })
         }
+
     }, [wrapperId])
 
     const updateWrapperId = () => {
@@ -52,7 +68,7 @@ const CompareUi = () => {
                 wrapperId={wrapperId}
                 wrapperSize={wrapperKeys.length}
             />
-            <ImagePreview/>
+            <ImagePreview imageUrl={wrapperPreview}/>
             <ResultsPanel
                 onSubmitFn={onSubmitFn}
                 wrapperId={wrapperId}

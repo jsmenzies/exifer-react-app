@@ -7,9 +7,13 @@ const divStyle = {
     margin: 'auto'
 }
 
-const ImagePreview = () => {
+type ImagePreview = {
+    imageUrl: string,
+}
+
+const ImagePreview = (prop: ImagePreview) => {
     return <div style={divStyle}>
-        <img src={logo} className="App-logo" alt="logo"/>
+        <img src={prop.imageUrl} className="App-logo" alt="logo"/>
     </div>
 
 }
