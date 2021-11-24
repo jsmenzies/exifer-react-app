@@ -1,10 +1,9 @@
 import React from "react";
-import {formatBytes} from "../../utils/Utils";
 
 type InfoData = {
     wrapperId: string,
-    contentSize: number,
-    wrapperSize: number
+    wrapperKeys: string[],
+    wrapperSize: number,
 }
 
 const divStyle = {
@@ -14,12 +13,12 @@ const divStyle = {
 }
 
 const InfoPanel = (info: InfoData) => {
-    let humanSize = formatBytes(info.contentSize, 3);
+    const listItems = info.wrapperKeys.map((key) => <li key={key}>{key}</li>);
 
     return <div style={divStyle}>
         <h3>{info.wrapperId}</h3>
         <h5>{info.wrapperSize} copies</h5>
-        <h5>{humanSize}</h5>
+        <div>{listItems}</div>
     </div>
 }
 

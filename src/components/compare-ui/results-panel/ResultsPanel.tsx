@@ -19,7 +19,7 @@ const ResultsPanel = (props: Results) => {
         <h3>{props.datetime}</h3>
         <h5>s3://results-bucket/{props.wrapperId}/2020-10-10 13:32:12-G3149498.jpg</h5>
         <BucketOptions/>
-        <button onClick={props.onSubmitFn(newTitle)}>Submit</button>
+        <button onClick={() => props.onSubmitFn(newTitle)}>Submit</button>
     </div>
 }
 

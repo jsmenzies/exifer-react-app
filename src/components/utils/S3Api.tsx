@@ -1,32 +1,42 @@
-import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-identity'
-import {CognitoIdentityClient} from "@aws-sdk/client-cognito-identity";
-import {ListObjectsV2Command, ListObjectsV2CommandOutput, S3Client} from "@aws-sdk/client-s3";
+import {S3} from "@aws-sdk/client-s3";
 
-const REGION = 'eu-west-1';
-const IDENTITY_POOL = '';
+const REGION = '';
 const BUCKET_NAME = '';
 
-const s3 = new S3Client({
+const s3Client = new S3({
     region: REGION,
-    credentials: fromCognitoIdentityPool({
-        client: new CognitoIdentityClient({region: REGION}),
-        identityPoolId: IDENTITY_POOL,
-    })
-})
-
-export const listFolders: () => Promise<string[]> = async () => {
-    try {
-        const response: ListObjectsV2CommandOutput = await s3.send(
-            new ListObjectsV2Command({Delimiter: "/", Bucket: BUCKET_NAME}),
-        );
-
-        if (response.CommonPrefixes) {
-            return response.CommonPrefixes
-                .map(value => value.Prefix)
-                .filter((folder): folder is string => !!folder)
-                .slice();
-        }
-    } catch (err: any) {
-        return err;
+    credentials: {
+        accessKeyId: "",
+        secretAccessKey: "",
     }
+});
+
+export const getWrapperData: (wrapperId: string) => Promise<string[]> = async (wrapperId: string) => {
+    console.log("fetching individual " + wrapperId)
+    return await s3Client.listObjectsV2({Bucket: BUCKET_NAME, Prefix: wrapperId})
+        .then(data => {
+            return data.Contents ? data.Contents
+                .map(value => value.Key)
+                .filter((wrapper): wrapper is string => !!wrapper) : [];
+        }, reason => {
+            console.log(reason)
+            return new Array<string>()
+        });
+}
+
+export const getImagePreview = async (key: string) => {
+    console.log("Fetching image " + key)
+    return await s3Client.getObject({Bucket: BUCKET_NAME, Key: key})
+}
+
+export const listWrappers: () => Promise<string[]> = async () => {
+    return await s3Client.listObjectsV2({Bucket: BUCKET_NAME, Delimiter: "/"})
+        .then(data => {
+            return data && data.CommonPrefixes ? data.CommonPrefixes
+                .map(value => value.Prefix)
+                .filter((wrapper): wrapper is string => !!wrapper) : [];
+        }, reason => {
+            console.log(reason)
+            return new Array<string>()
+        });
 }
