@@ -2,20 +2,21 @@ import React, {useEffect, useState} from "react";
 import InfoPanel from "./components/info-panel/InfoPanel";
 import PreviewViewer from "./components/image-preview/PreviewViewer";
 import ResultsPanel from "./components/results-panel/ResultsPanel";
-import {getWrapperImagePreview, getWrapperKeys, listAllWrappers} from "../utils/S3Api";
-
-const containerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-};
+import {fetchWrapperMetadata, listAllWrappers} from "../s3-api/s3-api";
+import {WrapperMetadata} from "../app-domain/app-declarations";
+import MetadataPanel from "./components/metadata-panel/MetadataPanel";
 
 const CompareUi = () => {
     const [wrapperList, setWrapperList] = useState<string[]>([]);
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [wrapperKeys, setWrapperKeys] = useState<string[]>([]);
     const [wrapperId, setWrapperId] = useState<string>("");
-    const [wrapperPreview, setWrapperPreview] = useState<string>("")
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [currentMetadata, setCurrentMetadata] = useState<WrapperMetadata>({
+        imageUrl: "",
+        wrapperId: "",
+        wrapperKeys: [],
+        wrapperObjects: [],
+        wrapperSize: 0
+    })
 
     useEffect(() => {
         listAllWrappers()
@@ -31,20 +32,9 @@ const CompareUi = () => {
 
     useEffect(() => {
         if (wrapperId !== '' && wrapperId !== undefined) {
-            getWrapperKeys(wrapperId)
-                .then(data => {
-                    setWrapperKeys(data)
-                    return data
-                })
-                .then(data => {
-                    let key = data[0];
-                    getWrapperImagePreview(key)
-                        .then(data => {
-                            setWrapperPreview(data);
-                        })
-                })
+            fetchWrapperMetadata(wrapperId)
+                .then(wrapper => setCurrentMetadata(wrapper))
         }
-
     }, [wrapperId])
 
     const updateWrapperId = () => {
@@ -58,18 +48,18 @@ const CompareUi = () => {
     };
 
     return (
-        <div style={containerStyle}>
+        <div className="flex col-span-3 p-2 gap-x-4 h-22">
             <InfoPanel
-                wrapperKeys={wrapperKeys}
+                wrapperKeys={currentMetadata.wrapperKeys}
                 wrapperId={wrapperId}
-                wrapperSize={wrapperKeys.length}
+                wrapperSize={currentMetadata.wrapperSize}
             />
-            <PreviewViewer imageUrl={wrapperPreview}/>
+            <PreviewViewer imageUrl={currentMetadata.imageUrl}/>
             <ResultsPanel
                 onSubmitFn={onSubmitFn}
                 wrapperId={wrapperId}
-                datetime={wrapperId}
-            />
+                datetime={wrapperId}/>
+            <MetadataPanel metadataList={currentMetadata.wrapperObjects}/>
         </div>
     );
 };

@@ -1,3 +1,11 @@
+export interface WrapperMetadata {
+    readonly wrapperId: string,
+    readonly wrapperSize: number,
+    readonly wrapperKeys: string[],
+    readonly wrapperObjects: Metadata [],
+    readonly imageUrl: string,
+}
+
 export interface Metadata {
     readonly key: string,
     readonly wrapperId: string,
@@ -22,10 +30,10 @@ export interface Result {
     readonly onSubmitFn: any,
 }
 
-export interface Wrapper {
-    wrapperId: string,
-    wrapperKeys: string[],
-    wrapperSize: number,
+export interface WrapperInfo {
+    readonly wrapperId: string,
+    readonly wrapperKeys: string[],
+    readonly wrapperSize: number,
 }
 
 export interface ImagePreview {

@@ -1,19 +1,13 @@
 import React from "react";
-import {Wrapper} from "../../../app-domain/app-declarations";
+import {WrapperInfo} from "../../../app-domain/app-declarations";
 
-const divStyle = {
-    borderRadius: '25px',
-    padding: '20px',
-    margin: 'auto'
-}
-
-const InfoPanel = (wrapper: Wrapper) => {
+const InfoPanel = (wrapper: WrapperInfo) => {
     const listItems = wrapper.wrapperKeys.map((key) => <li key={key}>{key}</li>);
 
-    return <div style={divStyle}>
-        <h3>{wrapper.wrapperId}</h3>
-        <h5>{wrapper.wrapperSize} copies</h5>
-        <div>{listItems}</div>
+    return <div className="flex-1 p-6 rounded-xl shadow-md">
+        <h3 className="text-xl font-medium text-black">{wrapper.wrapperId}</h3>
+        <p className="text-gray-500">{wrapper.wrapperSize} copies</p>
+        <p className="text-gray-500">{listItems}</p>
     </div>
 }
 
