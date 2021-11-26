@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../logo.svg";
+import {ImagePreview} from "../../../app-domain/app-declarations";
 
 const divStyle = {
     borderRadius: '25px',
@@ -7,15 +7,11 @@ const divStyle = {
     margin: 'auto'
 }
 
-type ImagePreview = {
-    imageUrl: string,
-}
-
-const ImagePreview = (prop: ImagePreview) => {
+const PreviewViewer = (prop: ImagePreview) => {
     return <div style={divStyle}>
         <img src={prop.imageUrl} className="App-logo" alt="logo"/>
     </div>
 
 }
 
-export default ImagePreview
+export default PreviewViewer

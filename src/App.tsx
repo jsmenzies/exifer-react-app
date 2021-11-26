@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import CompareUi from "./components/compare-ui/CompareUi";
+import CompareUi from "./@exifer/app-compare/CompareUi";
 
 const App = () => {
     return (

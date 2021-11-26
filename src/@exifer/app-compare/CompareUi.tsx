@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import InfoPanel from "./info-panel/InfoPanel";
-import ImagePreview from "./image-preview/ImagePreview";
-import ResultsPanel from "./results-panel/ResultsPanel";
-import {getImagePreview, getWrapperData, listWrappers} from "../utils/S3Api";
+import InfoPanel from "./components/info-panel/InfoPanel";
+import PreviewViewer from "./components/image-preview/PreviewViewer";
+import ResultsPanel from "./components/results-panel/ResultsPanel";
+import {getWrapperImagePreview, getWrapperKeys, listAllWrappers} from "../utils/S3Api";
 
 const containerStyle = {
     display: "flex",
@@ -18,7 +18,7 @@ const CompareUi = () => {
     const [wrapperPreview, setWrapperPreview] = useState<string>("")
 
     useEffect(() => {
-        listWrappers()
+        listAllWrappers()
             .then(wrappers => {
                 setWrapperList(wrappers)
                 return wrappers
@@ -31,21 +31,17 @@ const CompareUi = () => {
 
     useEffect(() => {
         if (wrapperId !== '' && wrapperId !== undefined) {
-            getWrapperData(wrapperId)
+            getWrapperKeys(wrapperId)
                 .then(data => {
                     setWrapperKeys(data)
                     return data
                 })
                 .then(data => {
                     let key = data[0];
-                    getImagePreview(key)
+                    getWrapperImagePreview(key)
                         .then(data => {
                             setWrapperPreview(data);
                         })
-                })
-                .then(() => {
-                    console.log({currentIndex})
-                    console.log({wrapperId})
                 })
         }
 
@@ -68,7 +64,7 @@ const CompareUi = () => {
                 wrapperId={wrapperId}
                 wrapperSize={wrapperKeys.length}
             />
-            <ImagePreview imageUrl={wrapperPreview}/>
+            <PreviewViewer imageUrl={wrapperPreview}/>
             <ResultsPanel
                 onSubmitFn={onSubmitFn}
                 wrapperId={wrapperId}

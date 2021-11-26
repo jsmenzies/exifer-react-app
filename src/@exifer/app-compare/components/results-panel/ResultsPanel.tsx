@@ -1,10 +1,5 @@
 import BucketOptions from "../bucket-options/BucketOptions";
-
-type Results = {
-    readonly wrapperId: string,
-    readonly datetime: string,
-    readonly onSubmitFn: any,
-}
+import {Result} from "../../../app-domain/app-declarations";
 
 const divStyle = {
     borderRadius: '25px',
@@ -12,7 +7,7 @@ const divStyle = {
     margin: 'auto',
 }
 
-const ResultsPanel = (props: Results) => {
+const ResultsPanel = (props: Result) => {
     let newTitle = props.datetime;
 
     return <div style={divStyle}>
