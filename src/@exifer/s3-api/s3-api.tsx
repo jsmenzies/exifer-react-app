@@ -25,10 +25,6 @@ export const listAllWrappers: () => Promise<string[]> = async () => {
         });
 }
 
-export const getWrapperImagePreview: (key: string) => Promise<string> = async (key: string) => {
-    return await getSignedUrl(s3Client, new GetObjectCommand({Bucket: BUCKET_NAME, Key: key}))
-}
-
 export const fetchWrapperMetadata: (id: string) => Promise<WrapperMetadata> = async (id) => {
     const keys: string[] = await getWrapperKeys(id);
     const imageUrl: string = await getWrapperImagePreview(keys[0]);
@@ -36,15 +32,8 @@ export const fetchWrapperMetadata: (id: string) => Promise<WrapperMetadata> = as
     return mapToWrapperMetadata(id, imageUrl, objects);
 }
 
-export const getKeyMetadata: (key: string) => Promise<Metadata> = async (key: string) => {
-    return await s3Client.send(new HeadObjectCommand({Bucket: BUCKET_NAME, Key: key}))
-        .then(head => mapHeadToMetadata(head));
-}
-
-export const getWrapperMetadata: (wrapperId: string) => Promise<Metadata[]> = async (wrapperId: string) => {
-    const keys = await getWrapperKeys(wrapperId);
-    const promises = keys.map(id => getKeyMetadata(id));
-    return await Promise.all(promises);
+export const getWrapperImagePreview: (key: string) => Promise<string> = async (key: string) => {
+    return await getSignedUrl(s3Client, new GetObjectCommand({Bucket: BUCKET_NAME, Key: key}))
 }
 
 export const getWrapperKeys: (wrapperId: string) => Promise<string[]> = async (wrapperId: string) => {
@@ -54,4 +43,9 @@ export const getWrapperKeys: (wrapperId: string) => Promise<string[]> = async (w
                 .map(value => value.Key)
                 .filter((wrapper): wrapper is string => !!wrapper) : [];
         });
+}
+
+export const getKeyMetadata: (key: string) => Promise<Metadata> = async (key: string) => {
+    return await s3Client.send(new HeadObjectCommand({Bucket: BUCKET_NAME, Key: key}))
+        .then(head => mapHeadToMetadata(head));
 }

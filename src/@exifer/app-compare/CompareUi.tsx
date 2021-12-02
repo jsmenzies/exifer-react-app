@@ -48,7 +48,7 @@ const CompareUi = () => {
     };
 
     return (
-        <div className="flex col-span-3 p-2 gap-x-4 h-22">
+        <div className="grid grid-cols-3 gap-4">
             <InfoPanel
                 wrapperKeys={currentMetadata.wrapperKeys}
                 wrapperId={wrapperId}

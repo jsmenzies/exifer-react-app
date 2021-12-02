@@ -1,5 +1,6 @@
 import React from "react";
 import {Metadata} from "../../../app-domain/app-declarations";
+import MetadataInfoSlide from "../metadata-info-slide/MetadataInfoSlide";
 
 type MetadataList = {
     metadataList: Metadata[]
@@ -7,9 +8,9 @@ type MetadataList = {
 
 const MetadataPanel = (metadataList: MetadataList) => {
 
-    const list = metadataList.metadataList.map((md) => <li key={md.key}>{md.exifId0Dt}</li>);
+    const list = metadataList.metadataList.map((md) => <MetadataInfoSlide metadata={md}/>);
 
-    return <div className="flex-1 p-6 rounded-xl shadow-md">
+    return <div className="col-span-3 flex-row gap-4 p-2 rounded-xl shadow-md">
         {list}
     </div>
 }
