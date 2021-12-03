@@ -8,7 +8,7 @@ type MetadataList = {
 
 const MetadataPanel = (metadataList: MetadataList) => {
 
-    const list = metadataList.metadataList.map((md) => <MetadataInfoSlide metadata={md}/>);
+    const list = metadataList.metadataList.map((md) => <MetadataInfoSlide {...md}/>);
 
     return <div className="col-span-3 flex-row gap-4 p-2 rounded-xl shadow-md">
         {list}
