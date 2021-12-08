@@ -48,19 +48,24 @@ const CompareUi = () => {
     };
 
     return (
-        <div className="grid grid-cols-3 gap-4">
-            <InfoPanel
-                wrapperKeys={currentMetadata.wrapperKeys}
-                wrapperId={wrapperId}
-                wrapperSize={currentMetadata.wrapperSize}
-            />
-            <PreviewViewer imageUrl={currentMetadata.imageUrl}/>
-            <ResultsPanel
-                onSubmitFn={onSubmitFn}
-                wrapperId={wrapperId}
-                datetime={wrapperId}/>
+        <>
+            <div className="grid grid-cols-3 gap-4">
+                <InfoPanel
+                    wrapperKeys={currentMetadata.wrapperKeys}
+                    wrapperId={wrapperId}
+                    wrapperSize={currentMetadata.wrapperSize}
+                />
+                <PreviewViewer imageUrl={currentMetadata.imageUrl}/>
+                <ResultsPanel
+                    onSubmitFn={onSubmitFn}
+                    wrapperId={wrapperId}
+                    datetime={wrapperId}/>
+            </div>
+            <div>
             <MetadataPanel metadataList={currentMetadata.wrapperObjects}/>
-        </div>
+            </div>
+        </>
+
     );
 };
 
