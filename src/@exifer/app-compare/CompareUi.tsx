@@ -2,14 +2,15 @@ import React, {useEffect, useState} from "react";
 import InfoPanel from "./components/info-panel/InfoPanel";
 import PreviewViewer from "./components/image-preview/PreviewViewer";
 import ResultsPanel from "./components/results-panel/ResultsPanel";
-import {fetchWrapperMetadata, listAllWrappers} from "../s3-api/s3-api";
-import {WrapperMetadata} from "../app-domain/app-declarations";
+import {fetchWrapperMetadata, listAllWrappers, updateWrapper} from "../s3-api/s3-api";
+import {Update, WrapperMetadata} from "../app-domain/app-declarations";
 import MetadataPanel from "./components/metadata-panel/MetadataPanel";
 
 const CompareUi = () => {
     const [wrapperList, setWrapperList] = useState<string[]>([]);
     const [wrapperId, setWrapperId] = useState<string>("");
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [finalDT, setFinalDT] = useState<string>("");
     const [currentMetadata, setCurrentMetadata] = useState<WrapperMetadata>({
         imageUrl: "",
         wrapperId: "",
@@ -41,10 +42,20 @@ const CompareUi = () => {
         const index = currentIndex + 1
         setCurrentIndex(index)
         setWrapperId(wrapperList[index])
+        setFinalDT("")
     }
 
-    const onSubmitFn = (name: String) => {
+    const onSubmitFn = (update: Update) => {
+        updateWrapper({
+            wrapperId: wrapperId,
+            finalDateTime: update.dateTime,
+            labels: update.labels,
+        })
         updateWrapperId()
+    };
+
+    const onUpdateFn = (name: string) => {
+        setFinalDT(name);
     };
 
     return (
@@ -59,10 +70,10 @@ const CompareUi = () => {
                 <ResultsPanel
                     onSubmitFn={onSubmitFn}
                     wrapperId={wrapperId}
-                    datetime={wrapperId}/>
+                    datetime={finalDT}/>
             </div>
             <div>
-            <MetadataPanel metadataList={currentMetadata.wrapperObjects}/>
+                <MetadataPanel updateFunc={onUpdateFn} metadataList={currentMetadata.wrapperObjects}/>
             </div>
         </>
 

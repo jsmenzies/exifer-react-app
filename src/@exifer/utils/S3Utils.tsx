@@ -17,7 +17,8 @@ export function mapHeadToMetadata(head: HeadObjectCommandOutput) {
         quicktimeMetaCreateDt: head.Metadata['quicktime-meta-create-dt'],
         title: head.Metadata['title'],
         titleDt: head.Metadata['title-dt'],
-        wrapperId: head.Metadata['wrapper-id']
+        wrapperId: head.Metadata['wrapper-id'],
+        func: undefined,
     } : {
         contentLength: "",
         exifId0Dt: "",
@@ -33,7 +34,8 @@ export function mapHeadToMetadata(head: HeadObjectCommandOutput) {
         quicktimeMetaCreateDt: "",
         title: "",
         titleDt: "",
-        wrapperId: ""
+        wrapperId: "",
+        func: undefined,
     }
 }
 

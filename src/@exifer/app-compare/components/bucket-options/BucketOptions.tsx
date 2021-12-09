@@ -1,19 +1,23 @@
 import React from "react";
+import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 
-const optionStyle = {
-    margin: 'auto'
+type Passer = {
+    updateFunc: any
+    labels: string[]
 }
 
-const cStyle = {
-    display: 'flex'
-}
+const BucketOptions = (passer: Passer) => {
+    const handleLabels = (event: any, newLabels: string[]) => {
+        passer.updateFunc(newLabels)
+    };
 
-const BucketOptions = () => {
-    return <div style={cStyle}>
-        <h5>Bucket Options</h5>
-        <input style={optionStyle} type="button" id="old " name="old" value="Old"/>
-        <input style={optionStyle} type="button" id="family " name="family" value="Family"/>
-        <input style={optionStyle} type="button" id="archive " name="archive" value="Archive"/>
+    return <div className={"flex"}>
+        <ToggleButtonGroup value={passer.labels} onChange={handleLabels}>
+            <ToggleButton value="old">Old</ToggleButton>
+            <ToggleButton value="family">Family</ToggleButton>
+            <ToggleButton value="archive">Archive</ToggleButton>
+            <ToggleButton value="other">Other</ToggleButton>
+        </ToggleButtonGroup>
     </div>
 }
 
