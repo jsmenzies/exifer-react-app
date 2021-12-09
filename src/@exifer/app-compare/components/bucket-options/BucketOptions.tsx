@@ -16,7 +16,7 @@ const BucketOptions = (passer: Passer) => {
             <ToggleButton value="old">Old</ToggleButton>
             <ToggleButton value="family">Family</ToggleButton>
             <ToggleButton value="archive">Archive</ToggleButton>
-            <ToggleButton value="other">Other</ToggleButton>
+            <ToggleButton value="bin">Bin</ToggleButton>
         </ToggleButtonGroup>
     </div>
 }
