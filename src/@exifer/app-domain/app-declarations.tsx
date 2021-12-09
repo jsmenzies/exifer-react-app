@@ -7,7 +7,7 @@ export interface WrapperMetadata {
 }
 
 export interface Metadata {
-    readonly key: string
+    readonly id: string
     readonly wrapperId: string
     readonly title: string
     readonly extension: string
@@ -22,16 +22,22 @@ export interface Metadata {
     readonly iptcCreateDigiDt: string
     readonly pngCreateDt: string
     readonly gpsDt: string
-    readonly func: any
+    readonly dateTimeFunc: any
+    readonly titleFunc: any
+    readonly keyFunc: any
 }
 
 export interface Result {
-    readonly wrapperId: string
+    readonly id: string,
+    readonly title: string,
     readonly datetime: string
+    readonly wrapperId: string
     readonly onSubmitFn: any,
 }
 
 export interface Update {
+    readonly key: string,
+    readonly title: string,
     readonly dateTime: string,
     readonly labels: string[]
 }
@@ -54,6 +60,8 @@ export interface DTValue {
 
 export interface WrapperUpdate {
     readonly wrapperId: string
+    readonly key: string
+    readonly title: string
     readonly finalDateTime: string,
     readonly labels: string[]
 }

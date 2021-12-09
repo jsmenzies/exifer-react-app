@@ -1,6 +1,6 @@
 import {GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, S3Client} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
-import {Metadata, WrapperMetadata, WrapperUpdate} from "../app-domain/app-declarations";
+import {Metadata, WrapperMetadata} from "../app-domain/app-declarations";
 import {mapHeadToMetadata, mapToWrapperMetadata} from "../utils/S3Utils";
 
 const REGION = process.env.REACT_APP_S3_REGION;
@@ -25,14 +25,10 @@ export const listAllWrappers: () => Promise<string[]> = async () => {
         });
 }
 
-export const updateWrapper: (update: WrapperUpdate) => Promise<void> = async (update) => {
-    console.log(update)
-    return await Promise.resolve();
-}
-
 export const fetchWrapperMetadata: (id: string) => Promise<WrapperMetadata> = async (id) => {
     const keys: string[] = await getWrapperKeys(id);
     const imageUrl: string = await getWrapperImagePreview(keys[0]);
+    // const imageUrl: string = "await getWrapperImagePreview(keys[0])";
     const objects: Metadata[] = await Promise.all(keys.map(key => getKeyMetadata(key)))
     return mapToWrapperMetadata(id, imageUrl, objects);
 }

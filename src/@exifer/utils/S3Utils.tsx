@@ -12,13 +12,15 @@ export function mapHeadToMetadata(head: HeadObjectCommandOutput) {
         gpsDt: head.Metadata['gps-dt'],
         iptcCreateDigiDt: head.Metadata['iptc-create-digi-dt'],
         iptcCreateDt: head.Metadata['iptc-create-dt'],
-        key: head.Metadata['key'],
+        id: head.Metadata['key'],
         pngCreateDt: head.Metadata['png-create-dt'],
         quicktimeMetaCreateDt: head.Metadata['quicktime-meta-create-dt'],
         title: head.Metadata['title'],
         titleDt: head.Metadata['title-dt'],
         wrapperId: head.Metadata['wrapper-id'],
-        func: undefined,
+        dateTimeFunc: undefined,
+        titleFunc: undefined,
+        keyFunc: undefined,
     } : {
         contentLength: "",
         exifId0Dt: "",
@@ -29,13 +31,15 @@ export function mapHeadToMetadata(head: HeadObjectCommandOutput) {
         gpsDt: "",
         iptcCreateDigiDt: "",
         iptcCreateDt: "",
-        key: "",
+        id: "",
         pngCreateDt: "",
         quicktimeMetaCreateDt: "",
         title: "",
         titleDt: "",
         wrapperId: "",
-        func: undefined,
+        dateTimeFunc: undefined,
+        titleFunc: undefined,
+        keyFunc: undefined,
     }
 }
 
@@ -43,7 +47,7 @@ export function mapToWrapperMetadata(wrapperId: string, imageUrl: string, object
     return {
         wrapperId: wrapperId,
         imageUrl: imageUrl,
-        wrapperKeys: objects.map(md => md.key),
+        wrapperKeys: objects.map(md => md.id),
         wrapperSize: objects.length,
         wrapperObjects: objects
     }

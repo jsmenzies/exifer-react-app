@@ -4,14 +4,24 @@ import MetadataDTValueBox from "../metadata-datetime-value-box/MetadataDTValueBo
 
 const MetadataInfoSlide = (metadata: Metadata) => {
 
-    const onClickFn = (name: String) => {
-        metadata.func(name);
+    const onKeySelect = (val: string) => {
+        console.log(val)
+        metadata.keyFunc(val);
+    }
+
+    const onTitleChange = (val: string) => {
+        metadata.titleFunc(val);
+    }
+
+    const onClickFn = (name: string) => {
+        metadata.dateTimeFunc(name);
     };
 
     return <div className="flex-1 rounded-xl shadow-md">
         <span>
+            <input type={"checkbox"} onClick={() => onKeySelect(metadata.id)}/>
             Title
-        <input type={"text"} defaultValue={metadata.title}/>
+        <input type={"text"} defaultValue={metadata.title} onChange={val => onTitleChange(val.target.value)}/>
         </span>
         <MetadataDTValueBox name={"titleDt"} value={metadata.titleDt} onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"fileModDt"} value={metadata.fileModDt} onClickFn={onClickFn}/>
@@ -19,7 +29,8 @@ const MetadataInfoSlide = (metadata: Metadata) => {
         <MetadataDTValueBox name={"exifSubId0DtOrig"} value={metadata.exifSubId0DtOrig} onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"exifSubId0DtDigi"} value={metadata.exifSubId0DtDigi} onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"pngCreateDt"} value={metadata.pngCreateDt} onClickFn={onClickFn}/>
-        <MetadataDTValueBox name={"quicktimeMetaCreateDt"} value={metadata.quicktimeMetaCreateDt} onClickFn={onClickFn}/>
+        <MetadataDTValueBox name={"quicktimeMetaCreateDt"} value={metadata.quicktimeMetaCreateDt}
+                            onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"gpsDt"} value={metadata.gpsDt} onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"iptcCreateDt"} value={metadata.iptcCreateDt} onClickFn={onClickFn}/>
         <MetadataDTValueBox name={"iptcCreateDigiDt"} value={metadata.iptcCreateDigiDt} onClickFn={onClickFn}/>

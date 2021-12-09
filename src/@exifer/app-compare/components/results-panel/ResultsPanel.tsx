@@ -16,19 +16,24 @@ const ResultsPanel = (result: Result) => {
     return <div className="p-6 rounded-xl shadow-md">
         <h5 className="col-end-3 col-span-1 text-xl font-medium text-black">
             s3://results-bucket/{result.wrapperId}{result.datetime}</h5>
-        <p className="text-gray-500">{result.datetime}</p>
+        <h3 className="text-gray-500">{result.id}</h3>
+        <br/>
+        <h3 className="text-gray-500">{result.datetime}</h3>
+        <br/>
+        <h3 className="text-gray-500">{result.title}</h3>
         <br/>
         <BucketOptions labels={labels} updateFunc={updateLabels}/>
         <br/>
-        <button className={!result.datetime ? "text-red-400" : "text-green-700"}
-                disabled={!result.datetime} onClick={() =>
-        {
-            result.onSubmitFn({
-                dateTime: result.datetime,
-                labels: labels,
-            })
-            resetLabels();
-        }}>Submit
+        <button
+            className={!result.datetime ? "text-red-400" : "text-green-700"}
+            disabled={!result.datetime}
+            onClick={() => {
+                result.onSubmitFn({
+                    dateTime: result.datetime,
+                    labels: labels,
+                })
+                resetLabels();
+            }}>Submit
         </button>
     </div>
 }

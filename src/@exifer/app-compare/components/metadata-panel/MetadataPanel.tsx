@@ -4,14 +4,19 @@ import MetadataInfoSlide from "../metadata-info-slide/MetadataInfoSlide";
 
 type MetadataList = {
     metadataList: Metadata[],
-    updateFunc: any,
+    dateTimeFunc: any,
+    titleFunc: any,
+    keyFunc: any,
 }
 
 const MetadataPanel = (metadataList: MetadataList) => {
 
     const list = metadataList.metadataList.map((md) => <MetadataInfoSlide
         {...md}
-        func={metadataList.updateFunc}/>);
+        dateTimeFunc={metadataList.dateTimeFunc}
+        keyFunc={metadataList.keyFunc}
+        titleFunc={metadataList.titleFunc}
+    />);
 
     return <div className="flex gap-4 p-2 rounded-xl shadow-md">
         {list}
