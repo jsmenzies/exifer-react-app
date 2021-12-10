@@ -36,7 +36,8 @@ export interface Result {
 }
 
 export interface Update {
-    readonly key: string,
+    readonly wrapperId: string,
+    readonly id: string,
     readonly title: string,
     readonly dateTime: string,
     readonly labels: string[]
@@ -60,7 +61,7 @@ export interface DTValue {
 
 export interface WrapperUpdate {
     readonly wrapperId: string
-    readonly key: string
+    readonly id: string
     readonly title: string
     readonly finalDateTime: string,
     readonly labels: string[]

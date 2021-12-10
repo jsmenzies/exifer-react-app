@@ -1,7 +1,7 @@
-import {WrapperUpdate} from "../app-domain/app-declarations";
+import {Update} from "../app-domain/app-declarations";
 
 
-export const updateWrapper: (update: WrapperUpdate) => Promise<number> = async (update) => {
+export const updateWrapper: (update: Update) => Promise<number> = async (update) => {
     const response = await fetch("http://localhost:8080/s3/update", {
         method: 'POST',
         cache: 'no-cache',
@@ -10,7 +10,8 @@ export const updateWrapper: (update: WrapperUpdate) => Promise<number> = async (
         },
         body: JSON.stringify(update),
     });
-    console.log({response})
+    // console.log({update})
     return response.status;
+    // return Promise.resolve(1);
 }
 

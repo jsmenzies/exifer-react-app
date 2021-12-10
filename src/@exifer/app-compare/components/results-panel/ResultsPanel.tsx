@@ -16,20 +16,23 @@ const ResultsPanel = (result: Result) => {
     return <div className="p-6 rounded-xl shadow-md">
         <h5 className="col-end-3 col-span-1 text-xl font-medium text-black">
             s3://results-bucket/{result.wrapperId}{result.datetime}</h5>
-        <h3 className="text-gray-500">{result.id}</h3>
+        <h3 className="text-gray-500">ID: {result.id}</h3>
         <br/>
-        <h3 className="text-gray-500">{result.datetime}</h3>
+        <h3 className="text-gray-500">Date: {result.datetime}</h3>
         <br/>
-        <h3 className="text-gray-500">{result.title}</h3>
+        <h3 className="text-gray-500">Title: {result.title}</h3>
         <br/>
         <BucketOptions labels={labels} updateFunc={updateLabels}/>
         <br/>
         <button
-            className={!result.datetime ? "text-red-400" : "text-green-700"}
-            disabled={!result.datetime}
+            className={result.datetime.length < 5 ? "text-red-400" : "text-green-700"}
+            disabled={result.datetime.length < 5}
             onClick={() => {
                 result.onSubmitFn({
-                    dateTime: result.datetime,
+                    id: result.id,
+                    title: result.title,
+                    wrapperId: result.wrapperId,
+                    finalDateTime: result.datetime,
                     labels: labels,
                 })
                 resetLabels();

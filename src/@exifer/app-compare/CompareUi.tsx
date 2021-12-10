@@ -5,6 +5,7 @@ import ResultsPanel from "./components/results-panel/ResultsPanel";
 import {fetchWrapperMetadata, listAllWrappers} from "../apis/s3-api";
 import {Update, WrapperMetadata} from "../app-domain/app-declarations";
 import MetadataPanel from "./components/metadata-panel/MetadataPanel";
+import {updateWrapper} from "../apis/metadata-analyser-api";
 
 const CompareUi = () => {
         const [wrapperList, setWrapperList] = useState<string[]>([]);
@@ -28,7 +29,6 @@ const CompareUi = () => {
                     return wrappers
                 })
                 .then(wrappers => {
-                    console.log("Setting first wrapper ID")
                     setWrapperId(wrappers[0])
                     setCurrentIndex(0)
                 })
@@ -40,7 +40,6 @@ const CompareUi = () => {
                     .then(wrapper => {
                         setCurrentMetadata(wrapper)
                     })
-                console.log("Fetching from here")
             }
         }, [wrapperId])
 
@@ -52,12 +51,9 @@ const CompareUi = () => {
         }
 
         const onSubmitFn = (update: Update) => {
-            // updateWrapper({
-            //     wrapperId: wrapperId,
-            //     finalDateTime: update.dateTime,
-            //     labels: update.labels,
-            // }).then(value => console.log(value))
-            console.log("onSubmit pressed")
+            updateWrapper(update)
+            setResultKey("")
+            setResultTitle("")
             updateWrapperId()
         };
 
