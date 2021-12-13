@@ -27,8 +27,8 @@ const MetadataInfoSlide = (metadata: Metadata) => {
         <input type={"text"} defaultValue={metadata.title} onChange={val => onTitleChange(val.target.value)}/>
         </span>
         <MetadataDTValueBox  name={"titleDt"} value={metadata.titleDt} onClickFn={onClickFn}/>
-        <MetadataDTValueBox  name={"fileModDt"} value={metadata.fileModDt} onClickFn={onClickFn}/>
         <MetadataDTValueBox  name={"exifId0Dt"} value={metadata.exifId0Dt} onClickFn={onClickFn}/>
+        <MetadataDTValueBox  name={"fileModDt"} value={metadata.fileModDt} onClickFn={onClickFn}/>
         <MetadataDTValueBox  name={"exifSubId0DtOrig"} value={metadata.exifSubId0DtOrig} onClickFn={onClickFn}/>
         <MetadataDTValueBox  name={"exifSubId0DtDigi"} value={metadata.exifSubId0DtDigi} onClickFn={onClickFn}/>
         <MetadataDTValueBox  name={"pngCreateDt"} value={metadata.pngCreateDt} onClickFn={onClickFn}/>

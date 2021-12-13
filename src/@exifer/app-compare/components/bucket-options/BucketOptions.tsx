@@ -18,6 +18,7 @@ const BucketOptions = (passer: Passer) => {
             <ToggleButton value="archive">Archive</ToggleButton>
             <ToggleButton value="undisplayable">Undisplayable</ToggleButton>
             <ToggleButton value="bin">Bin</ToggleButton>
+            <ToggleButton value="undatedable">Undatedable</ToggleButton>
         </ToggleButtonGroup>
     </div>
 }
